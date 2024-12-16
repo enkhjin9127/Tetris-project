@@ -1,0 +1,21 @@
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(10, 30px); /* 10 багана */
+    grid-template-rows: repeat(20, 30px); /* 20 мөр */
+    gap: 1px;
+    background-color: black;
+    width: 302px;
+    height: 602px;
+    margin: 20px auto;
+  }
+  .cell {
+    width: 30px;
+    height: 30px;
+    background-color: #111;
+  }
+  .active {
+    background-color: #0f0; /* Идэвхтэй блок ногоон өнгөтэй */
+  }
+  .fixed {
+    background-color: #555; /* Бэхлэгдсэн блок саарал өнгөтэй */
+  }
