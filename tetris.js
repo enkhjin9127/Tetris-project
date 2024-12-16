@@ -7,6 +7,8 @@ const cols = 10;
 const board = [];
 const nextBoard = [];
 let score = 0;
+let speed = 400; // Анхны хурд
+let gameInterval; // Тоглоомын интервал
 
 // Блокын хэлбэрүүд
 const shapes = [
@@ -157,6 +159,15 @@ function moveShape(direction) {
   }
   drawShape();
 }
+function setSpeed(newSpeed) {
+  speed = newSpeed;
+
+  // Хуучин интервалыг зогсооно
+  clearInterval(gameInterval);
+
+  // Шинэ хурдтай интервал үүсгэнэ
+  gameInterval = setInterval(() => moveShape("down"), speed);
+}
 
 // Блокыг талбайд бэхлэх
 function lockShape() {
@@ -295,4 +306,8 @@ document.addEventListener("keydown", (event) => {
 });
 
 // Тоглоом эхлүүлэх
-startGame();
+function startGame() {
+  drawShape();
+  drawNextShape();
+  setSpeed(speed); // Эхний хурдыг тохируулна
+}
