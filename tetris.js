@@ -90,6 +90,42 @@ function getRandomShape() {
 
 // Initialize the first bag
 refillBag();
+let lockTimer = null; // Timer for locking delay
+const LOCK_DELAY = 500; // Delay in milliseconds
+
+function moveShape(direction) {
+  if (direction === "down") {
+    currentShape.y++;
+    if (!isValidPosition()) {
+      currentShape.y--; // Revert the move
+
+      // Start the lock delay timer
+      if (!lockTimer) {
+        lockTimer = setTimeout(() => {
+          lockShape();
+          currentShape = getNextShape();
+          clearFullRows();
+          checkGameOver();
+          lockTimer = null; // Reset the timer
+          drawShape();
+        }, LOCK_DELAY);
+      }
+    } else {
+      // If the piece can still move, reset the lock timer
+      if (lockTimer) {
+        clearTimeout(lockTimer);
+        lockTimer = null;
+      }
+    }
+  } else if (direction === "left") {
+    currentShape.x--;
+    if (!isValidPosition()) currentShape.x++;
+  } else if (direction === "right") {
+    currentShape.x++;
+    if (!isValidPosition()) currentShape.x--;
+  }
+  drawShape();
+}
 
 // Одоогийн болон дараагийн блокуудыг үүсгэх
 let currentShape = getRandomShape();
@@ -184,26 +220,6 @@ function clearBoard() {
   );
 }
 
-// Блокыг хөдөлгөх
-function moveShape(direction) {
-  if (direction === "down") {
-    currentShape.y++;
-    if (!isValidPosition()) {
-      currentShape.y--;
-      lockShape();
-      currentShape = getNextShape();
-      clearFullRows();
-      checkGameOver();
-    }
-  } else if (direction === "left") {
-    currentShape.x--;
-    if (!isValidPosition()) currentShape.x++;
-  } else if (direction === "right") {
-    currentShape.x++;
-    if (!isValidPosition()) currentShape.x--;
-  }
-  drawShape();
-}
 function setSpeed(newSpeed) {
   speed = newSpeed;
 
