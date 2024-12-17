@@ -32,8 +32,8 @@ body {
 
 #next-shape {
   display: grid;
-  grid-template-columns: repeat(3, 30px);
-  grid-template-rows: repeat(3, 30px);
+  grid-template-columns: repeat(4, 30px);
+  grid-template-rows: repeat(4, 30px);
   gap: 1px;
   background-color: #333;
   padding: 5px;
@@ -52,7 +52,6 @@ body {
 .cell.fixed {
   background-color: var(--color, #e74c3c); /* Санамсаргүй өнгө хадгалах */
 }
-
 
 .cell.shadow {
   background-color: rgba(243, 156, 18, 0.3);

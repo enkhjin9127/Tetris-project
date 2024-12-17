@@ -12,12 +12,11 @@ let gameInterval; // Тоглоомын интервал
 let level = 1; // Анхны түвшин
 const levelUpScore = 1000; // Түвшин ахих онооны босго
 
-
 // Блокын хэлбэрүүд
 const shapes = [
   [
-    [1, 1, 1],
     [0, 1, 0],
+    [1, 1, 1],
   ], // T хэлбэр
   [
     [1, 1, 0],
@@ -50,19 +49,47 @@ function updateLevel() {
   }
 }
 
-
 // Санамсаргүй өнгө үүсгэх функц
 function getRandomColor() {
-  const colors = ["#f39c12", "#e74c3c", "#3498db", "#2ecc71", "#9b59b6", "#e67e22"];
+  const colors = [
+    "#f39c12",
+    "#e74c3c",
+    "#3498db",
+    "#2ecc71",
+    "#9b59b6",
+    "#e67e22",
+  ];
   return colors[Math.floor(Math.random() * colors.length)];
 }
 
-// Санамсаргүй блок үүсгэх
+let bag = [];
+
+// Function to shuffle an array (Fisher-Yates shuffle)
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Function to refill the bag with all 7 shapes in random order
+function refillBag() {
+  bag = [...shapes]; // Copy all shapes into the bag
+  shuffle(bag); // Shuffle the bag
+}
+
+// Function to get the next shape from the 7-bag
 function getRandomShape() {
-  const shape = shapes[Math.floor(Math.random() * shapes.length)];
-  const color = getRandomColor();
+  if (bag.length === 0) {
+    refillBag(); // If the bag is empty, refill it
+  }
+  const shape = bag.pop(); // Get the last shape from the bag
+  const color = getRandomColor(); // Assign a random color
   return { shape, color, x: Math.floor(cols / 2 - shape[0].length / 2), y: 0 };
 }
+
+// Initialize the first bag
+refillBag();
 
 // Одоогийн болон дараагийн блокуудыг үүсгэх
 let currentShape = getRandomShape();
@@ -81,9 +108,9 @@ for (let r = 0; r < rows; r++) {
 }
 
 // Дараагийн хэлбэрийн талбар үүсгэх
-for (let r = 0; r < 3; r++) {
+for (let r = 0; r < 4; r++) {
   const row = [];
-  for (let c = 0; c < 3; c++) {
+  for (let c = 0; c < 4; c++) {
     const cell = document.createElement("div");
     cell.classList.add("cell");
     nextShapeContainer.appendChild(cell);
@@ -97,7 +124,13 @@ function drawShadow() {
   clearShadow();
   let tempY = currentShape.y;
 
-  while (isValidPosition({ x: currentShape.x, y: tempY + 1, shape: currentShape.shape })) {
+  while (
+    isValidPosition({
+      x: currentShape.x,
+      y: tempY + 1,
+      shape: currentShape.shape,
+    })
+  ) {
     tempY++;
   }
 
@@ -200,7 +233,11 @@ function lockShape() {
 }
 
 // Хязгаар шалгах
-function isValidPosition({ x = currentShape.x, y = currentShape.y, shape = currentShape.shape } = {}) {
+function isValidPosition({
+  x = currentShape.x,
+  y = currentShape.y,
+  shape = currentShape.shape,
+} = {}) {
   return shape.every((row, rIdx) => {
     return row.every((value, cIdx) => {
       if (!value) return true;
@@ -330,4 +367,5 @@ function startGame() {
   setSpeed(400); // Анхны хурд
   drawShape();
   drawNextShape();
+  setSpeed(speed); // Эхний хурдыг тохируулна
 }
