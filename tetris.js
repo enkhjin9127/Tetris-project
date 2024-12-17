@@ -10,7 +10,11 @@ let score = 0;
 let speed = 400; // Анхны хурд
 let gameInterval; // Тоглоомын интервал
 let level = 1; // Анхны түвшин
+<<<<<<< Updated upstream
 const levelUpScore = 600; // Түвшин ахих онооны босго
+=======
+const levelUpScore = 700; // Түвшин ахих онооны босго
+>>>>>>> Stashed changes
 
 // Блокын хэлбэрүүд
 const shapes = [
