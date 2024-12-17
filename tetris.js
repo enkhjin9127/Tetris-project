@@ -9,6 +9,9 @@ const nextBoard = [];
 let score = 0;
 let speed = 400; // Анхны хурд
 let gameInterval; // Тоглоомын интервал
+let level = 1; // Анхны түвшин
+const levelUpScore = 1000; // Түвшин ахих онооны босго
+
 
 // Блокын хэлбэрүүд
 const shapes = [
@@ -38,6 +41,15 @@ const shapes = [
     [1, 1, 1],
   ], // J хэлбэр
 ];
+function updateLevel() {
+  const newLevel = Math.floor(score / levelUpScore) + 1;
+  if (newLevel > level) {
+    level = newLevel;
+    setSpeed(speed - 50 * (level - 1)); // Хурдыг нэмэгдүүлнэ
+    document.getElementById("level").textContent = level; // Дэлгэц дээр түвшинг харуулах
+  }
+}
+
 
 // Санамсаргүй өнгө үүсгэх функц
 function getRandomColor() {
@@ -231,6 +243,12 @@ function updateScore(rowsCleared) {
   const points = [0, 100, 300, 500, 800];
   score += points[rowsCleared];
   document.getElementById("score").textContent = score;
+  updateLevel(); // Шинэ онооны дараа түвшинг шинэчилнэ
+}
+function setSpeed(newSpeed) {
+  speed = Math.max(newSpeed, 50); // Хурд хамгийн багадаа 50мс байна
+  clearInterval(gameInterval); // Өмнөх интервал зогсоох
+  gameInterval = setInterval(() => moveShape("down"), speed);
 }
 
 // Тоглоом дуусахыг шалгах
@@ -307,7 +325,9 @@ document.addEventListener("keydown", (event) => {
 
 // Тоглоом эхлүүлэх
 function startGame() {
+  level = 1;
+  score = 0;
+  setSpeed(400); // Анхны хурд
   drawShape();
   drawNextShape();
-  setSpeed(speed); // Эхний хурдыг тохируулна
 }
