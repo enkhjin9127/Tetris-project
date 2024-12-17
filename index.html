@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tetris Game</title>
-  <link rel="icon" type="image/x-icon" href="/favicon (1).ico">
-  <link rel="stylesheet" href="./tetris.css">
-  
-</head>
-<body>
-  <div id="game-container">
-    <div id="game-board"></div>
-    <div id="next-shape-container">
-      <h3>Дараагийн хэлбэр:</h3>
-      <div id="next-shape"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tetris Game</title>
+    <link rel="icon" type="image/x-icon" href="/favicon (1).ico" />
+    <link rel="stylesheet" href="./tetris.css" />
+  </head>
+  <body>
+    <div id="game-container">
+      <div id="game-board"></div>
+      <div id="next-shape-container">
+        <h3>Дараагийн хэлбэр:</h3>
+        <div id="next-shape"></div>
+      </div>
     </div>
-  </div>
-  <div id="score-container">
-    <h3>Оноо: <span id="score">0</span></h3>
-  </div>
-  <script src="./tetris.js"></script>
-</body>
+    <div id="score-container">
+      <h3>Оноо: <span id="score">0</span></h3>
+    </div>
+    <div>
+      <button onclick="setSpeed(speed)">Start Game</button>
+    </div>
+    <script src="./tetris.js"></script>
+  </body>
 </html>

@@ -10,7 +10,7 @@ let score = 0;
 let speed = 400; // Анхны хурд
 let gameInterval; // Тоглоомын интервал
 let level = 1; // Анхны түвшин
-const levelUpScore = 1000; // Түвшин ахих онооны босго
+const levelUpScore = 600; // Түвшин ахих онооны босго
 
 // Блокын хэлбэрүүд
 const shapes = [
@@ -335,13 +335,6 @@ function rotateShape() {
   drawShape();
 }
 
-// Тоглоом эхлүүлэх
-function startGame() {
-  drawShape();
-  drawNextShape();
-  setInterval(() => moveShape("down"), 400);
-}
-
 // Товчлуураар удирдах
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowLeft") moveShape("left");
@@ -364,7 +357,6 @@ document.addEventListener("keydown", (event) => {
 function startGame() {
   level = 1;
   score = 0;
-  setSpeed(400); // Анхны хурд
   drawShape();
   drawNextShape();
   setSpeed(speed); // Эхний хурдыг тохируулна
