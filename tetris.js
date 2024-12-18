@@ -43,6 +43,7 @@ const shapes = [
     [1, 1, 1],
   ], // J хэлбэр
 ];
+
 function updateLevel() {
   const newLevel = Math.floor(score / levelUpScore) + 1;
   if (newLevel > level) {
@@ -165,6 +166,17 @@ for (let r = 0; r < 4; r++) {
   }
   nextBoard.push(row);
 }
+// Дараагийн хэлбэрийн талбар үүсгэх
+for (let r = 0; r < 4; r++) {
+  const row = [];
+  for (let c = 0; c < 4; c++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    holdContainer.appendChild(cell);
+    row.push(cell);
+  }
+  nextBoard.push(row);
+}
 
 // Сүүдэр зурах функц
 function drawShadow() {
@@ -226,11 +238,6 @@ function drawHoldShape() {
   // Clear the hold container
   holdContainer.innerHTML = "";
 
-  // Set the hold container to a fixed 4x4 grid
-  holdContainer.style.display = "grid";
-  holdContainer.style.gridTemplateRows = "repeat(4, 30px)";
-  holdContainer.style.gridTemplateColumns = "repeat(4, 30px)";
-
   if (!holdShape) return; // Nothing to draw if holdShape is null
 
   const shape = holdShape.shape;
@@ -259,25 +266,6 @@ function drawHoldShape() {
       holdContainer.appendChild(cell);
     }
   }
-}
-
-function holdCurrentShape() {
-  if (!canHold) return; // Prevent multiple swaps per drop
-
-  if (!holdShape) {
-    // First time holding a piece
-    holdShape = currentShape;
-    currentShape = getNextShape();
-  } else {
-    // Swap current piece with held piece
-    [holdShape, currentShape] = [currentShape, holdShape];
-    currentShape.x = Math.floor(cols / 2 - currentShape.shape[0].length / 2);
-    currentShape.y = 0;
-  }
-
-  canHold = false; // Disable hold until next piece is locked
-  drawHoldShape(); // Update the hold container
-  drawShape(); // Redraw the current piece
 }
 
 function holdCurrentShape() {
@@ -383,11 +371,12 @@ function clearFullRows() {
 
 // Оноог шинэчлэх
 function updateScore(rowsCleared) {
-  const points = [0, 100, 300, 500, 800];
+  const points = [0, 100, 200, 300, 400];
   score += points[rowsCleared];
   document.getElementById("score").textContent = score;
   updateLevel(); // Шинэ онооны дараа түвшинг шинэчилнэ
 }
+
 function setSpeed(newSpeed) {
   speed = Math.max(newSpeed, 50); // Хурд хамгийн багадаа 50мс байна
   clearInterval(gameInterval); // Өмнөх интервал зогсоох
