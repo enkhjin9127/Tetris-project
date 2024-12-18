@@ -1,33 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tetris Game</title>
-    <link rel="icon" type="image/x-icon" href="/favicon (1).ico" />
-    <link rel="stylesheet" href="./tetris.css" />
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tetris Game</title>
+  <link rel="icon" type="image/x-icon" href="/favicon (1).ico" />
+  <link rel="stylesheet" href="./tetris.css" />
+</head>
+
+<body>
+  <p id="instructions"><span class="big-text">Press "Start game" to play.</span><br> (Otherwise it might not work as
+    intended xD) <br>
+    Press 'shift' to hold a piece. Press 'shift' again to use it.</p>
+  <main>
     <div id="game-container">
-      <div id="game-board"></div>
-      <div id="next-shape-container">
-        <h3>Дараагийн хэлбэр:</h3>
-        <div id="next-shape"></div>
-      </div>
       <div id="hold-container">
         <h3>Hold:</h3>
         <div id="hold-shape"></div>
       </div>
+      <div id="game-board"></div>
+      <div id="next-shape-container">
+        <h3>Дараагийн хэлбэр:</h3>
+
+        <div id="next-shape"></div>
+
+      </div>
+
     </div>
-    <div id="score-container">
-      <h3>Оноо: <span id="score">0</span></h3>
-    </div>
-    <div style="display: flex; justify-content: space-between; width: 260px">
+  </main>
+  <div id="score-container">
+    <h3>Оноо: <span id="score">0</span></h3>
+  </div>
+  
+ <div style="display: flex; justify-content: space-between; width: 260px">
       <button onclick="setSpeed(speed)">Start Game</button>
       <a href="https://enkhjin9127.github.io/Tetris-project/"
         ><button>Restart</button></a
       >
     </div>
-    <script src="./tetris.js"></script>
-  </body>
+  <script src="./tetris.js"></script>
+</body>
+
 </html>
+
+
+
