@@ -1,5 +1,8 @@
 const gameBoard = document.getElementById("game-board");
 const nextShapeContainer = document.getElementById("next-shape");
+document.querySelector("button").addEventListener("click", function () {
+  this.blur();
+});
 
 // Тоглоомын тохиргоо
 const rows = 20;
@@ -387,7 +390,7 @@ function setSpeed(newSpeed) {
 function checkGameOver() {
   if (board[0].some((cell) => cell.classList.contains("fixed"))) {
     playSound(gameOverSound);
-    alert("Тоглоом дууслаа!\n"+"Score: "+score);
+    alert("Тоглоом дууслаа!\n" + "Score: " + score);
     location.reload();
   }
 }
