@@ -70,3 +70,27 @@ button {
   font-size: 16px;
   cursor: pointer;
 }
+#hold-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#hold-shape {
+  display: grid;
+  grid-template-columns: repeat(4, 30px);
+  grid-template-rows: repeat(4, 30px);
+  gap: 1px;
+  background-color: #333;
+  padding: 5px;
+}
+
+.hold-cell {
+  width: 30px;
+  height: 30px;
+  background-color: #444;
+}
+
+.hold-cell.active {
+  background-color: var(--color, #f39c12);
+}
