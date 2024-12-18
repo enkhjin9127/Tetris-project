@@ -17,10 +17,6 @@ main {
   width: 20vw;
   font-family: cursive;
   font-size: large;
-  opacity: 0.3;
-}
-#instructions:hover {
-  opacity: 1;
 }
 .center {
   display: flex;
