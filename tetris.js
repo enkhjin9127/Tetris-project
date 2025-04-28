@@ -20,10 +20,7 @@ const holdContainer = document.getElementById("hold-shape");
 
 // Блокын хэлбэрүүд
 const shapes = [
-  [
-    [0, 1, 0],
-    [1, 1, 1],
-  ], // T хэлбэр
+  [``[(0, 1, 0)], [1, 1, 1]], // T хэлбэр
   [
     [1, 1, 0],
     [0, 1, 1],
@@ -58,9 +55,8 @@ function updateLevel() {
 
 const gameOverSound = new Audio("sounds/videoplayback.mp4");
 
-// Helper function to play sounds
 function playSound(sound) {
-  sound.currentTime = 0; // Reset sound to start
+  sound.currentTime = 0;
   sound.play();
 }
 
@@ -79,7 +75,6 @@ function getRandomColor() {
 
 let bag = [];
 
-// Function to shuffle an array (Fisher-Yates shuffle)
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -87,46 +82,41 @@ function shuffle(array) {
   }
 }
 
-// Function to refill the bag with all 7 shapes in random order
 function refillBag() {
-  bag = [...shapes]; // Copy all shapes into the bag
-  shuffle(bag); // Shuffle the bag
+  bag = [...shapes];
+  shuffle(bag);
 }
 
-// Function to get the next shape from the 7-bag
 function getRandomShape() {
   if (bag.length === 0) {
-    refillBag(); // If the bag is empty, refill it
+    refillBag();
   }
-  const shape = bag.pop(); // Get the last shape from the bag
-  const color = getRandomColor(); // Assign a random color
+  const shape = bag.pop();
+  const color = getRandomColor();
   return { shape, color, x: Math.floor(cols / 2 - shape[0].length / 2), y: 0 };
 }
 
-// Initialize the first bag
 refillBag();
-let lockTimer = null; // Timer for locking delay
-const LOCK_DELAY = 500; // Delay in milliseconds
+let lockTimer = null;
+const LOCK_DELAY = 500;
 
 function moveShape(direction) {
   if (direction === "down") {
     currentShape.y++;
     if (!isValidPosition()) {
-      currentShape.y--; // Revert the move
+      currentShape.y--;
 
-      // Start the lock delay timer
       if (!lockTimer) {
         lockTimer = setTimeout(() => {
           lockShape();
           currentShape = getNextShape();
           clearFullRows();
           checkGameOver();
-          lockTimer = null; // Reset the timer
+          lockTimer = null;
           drawShape();
         }, LOCK_DELAY);
       }
     } else {
-      // If the piece can still move, reset the lock timer
       if (lockTimer) {
         clearTimeout(lockTimer);
         lockTimer = null;
@@ -142,7 +132,6 @@ function moveShape(direction) {
   drawShape();
 }
 
-// Одоогийн болон дараагийн блокуудыг үүсгэх
 let currentShape = getRandomShape();
 let nextShape = getRandomShape();
 
@@ -238,14 +227,12 @@ function drawShape() {
 }
 
 function drawHoldShape() {
-  // Clear the hold container
   holdContainer.innerHTML = "";
 
-  if (!holdShape) return; // Nothing to draw if holdShape is null
+  if (!holdShape) return;
 
   const shape = holdShape.shape;
 
-  // Center the shape within the 4x4 grid
   const offsetX = Math.floor((4 - shape[0].length) / 2);
   const offsetY = Math.floor((4 - shape.length) / 2);
 
@@ -254,7 +241,6 @@ function drawHoldShape() {
       const cell = document.createElement("div");
       cell.classList.add("hold-cell");
 
-      // Check if the current grid position matches a block in the shape
       if (
         r >= offsetY &&
         r < offsetY + shape.length &&
@@ -272,22 +258,20 @@ function drawHoldShape() {
 }
 
 function holdCurrentShape() {
-  if (!canHold) return; // Prevent multiple swaps per drop
+  if (!canHold) return;
 
   if (!holdShape) {
-    // First time holding a piece
     holdShape = currentShape;
     currentShape = getNextShape();
   } else {
-    // Swap current piece with held piece
     [holdShape, currentShape] = [currentShape, holdShape];
     currentShape.x = Math.floor(cols / 2 - currentShape.shape[0].length / 2);
     currentShape.y = 0;
   }
 
-  canHold = false; // Disable hold until next piece is locked
-  drawHoldShape(); // Update the hold container
-  drawShape(); // Redraw the current piece
+  canHold = false;
+  drawHoldShape();
+  drawShape();
 }
 
 // Талбайг цэвэрлэх
